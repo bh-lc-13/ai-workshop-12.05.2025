@@ -4,195 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brandon Huff | Web Developer</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <style>
-        /* --- Global Styles and Typography --- */
-        :root {
-            --primary-color: #0366d6; /* GitHub blue */
-            --secondary-color: #24292e; /* Dark background */
-            --text-color: #24292e;
-            --light-text: #ffffff;
-            --background-color: #f6f8fa; /* Light grey background */
-            --border-color: #e1e4e8;
-            --hover-bg: #e8e8e8;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* --- Header and Navigation --- */
-        .navbar {
-            background: var(--secondary-color);
-            color: var(--light-text);
-            padding: 15px 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar h1 {
-            font-size: 1.5em;
-        }
-
-        .navbar nav a {
-            color: var(--light-text);
-            text-decoration: none;
-            margin-left: 20px;
-            padding: 5px 10px;
-            transition: background-color 0.3s;
-        }
-
-        .navbar nav a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-        }
-
-        .github-link {
-            color: var(--primary-color);
-            background-color: var(--light-text);
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .github-link:hover {
-            background-color: #cccccc;
-        }
-
-        /* --- Hero/About Section --- */
-        .hero {
-            text-align: center;
-            padding: 60px 0;
-            background: #ffffff;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%; /* Makes the image circular */
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 5px solid var(--primary-color);
-        }
-
-        .hero h2 {
-            margin-bottom: 15px;
-            font-size: 2em;
-        }
-
-        .cta-button {
-            background-color: var(--primary-color);
-            color: var(--light-text);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-
-        .cta-button:hover {
-            background-color: #005cc5;
-        }
-
-        /* --- Projects Section --- */
-        .projects {
-            padding: 40px 0;
-        }
-
-        .projects h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .repo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-            gap: 20px;
-        }
-
-        .repo-card {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 20px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .repo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .repo-card h3 {
-            margin-bottom: 10px;
-            font-size: 1.25em;
-        }
-
-        .repo-card a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .repo-card a:hover {
-            text-decoration: underline;
-        }
-
-        .repo-card p {
-            font-size: 0.9em;
-            color: #586069;
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--secondary-color);
-            color: var(--light-text);
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 30px;
-            font-size: 0.85em;
-        }
-
-        /* --- Responsiveness (Optional: for smaller screens) --- */
-        @media (max-width: 768px) {
-            .navbar .container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .navbar nav {
-                margin-top: 10px;
-            }
-
-            .navbar nav a {
-                display: block;
-                margin: 5px 0;
-            }
-        }
-    </style>
 </head>
 <body>
+
+    <header class="navbar">
+        <div class="container">
+            <h1>Brandon Huff</h1>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="https://linkedin.com/in/brandonhuff" target="_blank">LinkedIn</a>
+                <a href="https://github.com/brandonhuff" target="_blank" class="github-link"><i class="fab fa-github"></i> GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="about" class="hero">
+            <div class="container">
+                <div class="profile-info">
+                    <img id="profile-picture" src="profile.jpg" alt="Brandon Huff Profile Picture" class="profile-img">
+                    <h2>Hi, I'm Brandon! 👋</h2>
+                    <p>I'm a **passionate Web Developer** specializing in modern front-end frameworks and building highly efficient, user-centric applications. Welcome to my GitHub showcase!</p>
+                    <button id="contact-button" class="cta-button">Get in Touch</button>
+                </div>
+            </div>
+        </section>
+        
+        <hr>
+
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2>Featured Projects</h2>
+                <div id="repo-list" class="repo-grid">
+                    <p>Loading projects...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Brandon Huff. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
