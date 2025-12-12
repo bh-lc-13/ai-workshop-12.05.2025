@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Equation Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .equation-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #667eea;
+        }
+        
+        .equation {
+            font-size: 1.8em;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .controls {
+            margin-top: 30px;
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #764ba2;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        
+        .value-display {
+            min-width: 50px;
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+        
+        .graph-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        canvas {
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .info-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8eaf6;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 968px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔵 Circle Equation Explorer</h1>
+        <p class="subtitle">Explore how the standard form equation creates a circle on the coordinate plane</p>
+        
+        <div class="content">
+            <div class="equation-section">
+                <h2 style="color: #667eea; margin-bottom: 15px;">Standard Form Equation</h2>
+                <div class="equation" id="equation">
+                    (x - 0)² + (y - 0)² = 5²
+                </div>
+                <div class="equation" id="equation-simplified" style="font-size: 1.5em; margin-top: 10px; background: #f0f4ff;">
+                    (x - 0)² + (y - 0)² = 25
+                </div>
+                
+                <div class="info-box">
+                    <h3>General Form:</h3>
+                    <p style="font-family: 'Courier New', monospace; font-size: 1.2em; text-align: center; margin: 10px 0;">
+                        (x - h)² + (y - k)² = r²
+                    </p>
+                    <p>
+                        <strong>h, k:</strong> Center coordinates (h, k)<br>
+                        <strong>r:</strong> Radius of the circle
+                    </p>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Center X (h):</label>
+                        <div class="slider-container">
+                            <input type="range" id="h" min="-8" max="8" value="0" step="0.5">
+                            <span class="value-display" id="h-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Center Y (k):</label>
+                        <div class="slider-container">
+                            <input type="range" id="k" min="-8" max="8" value="0" step="0.5">
+                            <span class="value-display" id="k-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Radius (r):</label>
+                        <div class="slider-container">
+                            <input type="range" id="r" min="0.5" max="8" value="5" step="0.5">
+                            <span class="value-display" id="r-value">5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="graph-section">
+                <canvas id="graph" width="500" height="500"></canvas>
+                <div class="info-box" style="width: 100%;">
+                    <h3>Current Circle:</h3>
+                    <p id="circle-info">
+                        Center: (0, 0)<br>
+                        Radius: 5 units<br>
+                        Diameter: 10 units
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('graph');
+        const ctx = canvas.getContext('2d');
+        const hSlider = document.getElementById('h');
+        const kSlider = document.getElementById('k');
+        const rSlider = document.getElementById('r');
+        const hValue = document.getElementById('h-value');
+        const kValue = document.getElementById('k-value');
+        const rValue = document.getElementById('r-value');
+        const equation = document.getElementById('equation');
+        const equationSimplified = document.getElementById('equation-simplified');
+        const circleInfo = document.getElementById('circle-info');
+        
+        const scale = 25;
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        function drawGrid() {
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i <= canvas.width; i += scale) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+        }
+        
+        function drawAxes() {
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(canvas.width, centerY);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, canvas.height);
+            ctx.stroke();
+            
+            ctx.fillStyle = '#333';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            
+            for (let i = -10; i <= 10; i++) {
+                if (i !== 0) {
+                    const x = centerX + i * scale;
+                    const y = centerY + i * scale;
+                    
+                    if (x >= 0 && x <= canvas.width) {
+                        ctx.fillText(i, x, centerY + 20);
+                    }
+                    
+                    if (y >= 0 && y <= canvas.height) {
+                        ctx.fillText(-i, centerX + 20, y + 5);
+                    }
+                }
+            }
+            
+            ctx.fillText('0', centerX + 15, centerY + 20);
+        }
+        
+        function drawCircle(h, k, r) {
+            const cx = centerX + h * scale;
+            const cy = centerY - k * scale;
+            const radius = r * scale;
+            
+            ctx.strokeStyle = '#667eea';
+            ctx.fillStyle = 'rgba(102, 126, 234, 0.1)';
+            ctx.lineWidth = 3;
+            
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.fillStyle = '#764ba2';
+            ctx.beginPath();
+            ctx.arc(cx, cy, 5, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + radius, cy);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.fillStyle = '#ff6b6b';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('r', cx + radius/2, cy - 10);
+            
+            ctx.fillStyle = '#764ba2';
+            ctx.fillText(`(${h}, ${k})`, cx + 10, cy - 10);
+        }
+        
+        function updateEquation(h, k, r) {
+            const hStr = h === 0 ? 'x' : h > 0 ? `(x - ${h})` : `(x + ${Math.abs(h)})`;
+            const kStr = k === 0 ? 'y' : k > 0 ? `(y - ${k})` : `(y + ${Math.abs(k)})`;
+            equation.textContent = `${hStr}² + ${kStr}² = ${r}²`;
+            
+            const rSquared = (r * r).toFixed(2).replace(/\.00$/, '');
+            equationSimplified.textContent = `${hStr}² + ${kStr}² = ${rSquared}`;
+        }
+        
+        function updateInfo(h, k, r) {
+            const diameter = (r * 2).toFixed(1);
+            circleInfo.innerHTML = `
+                Center: (${h}, ${k})<br>
+                Radius: ${r} units<br>
+                Diameter: ${diameter} units
+            `;
+        }
+        
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            drawGrid();
+            drawAxes();
+            
+            const h = parseFloat(hSlider.value);
+            const k = parseFloat(kSlider.value);
+            const r = parseFloat(rSlider.value);
+            
+            drawCircle(h, k, r);
+            updateEquation(h, k, r);
+            updateInfo(h, k, r);
+        }
+        
+        hSlider.addEventListener('input', (e) => {
+            hValue.textContent = e.target.value;
+            draw();
+        });
+        
+        kSlider.addEventListener('input', (e) => {
+            kValue.textContent = e.target.value;
+            draw();
+        });
+        
+        rSlider.addEventListener('input', (e) => {
+            rValue.textContent = e.target.value;
+            draw();
+        });
+        
+        draw();
+    </script>
+</body>
+</html>
